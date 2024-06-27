@@ -31,14 +31,5 @@ router.post("/", async (req, res) => {
   }
 });
 
-// // Route pour obtenir les transactions de l'utilisateur connecté
-// router.get('/transactions', auth, async (req, res) => {
-//   try {
-//     const transactions = await Transaction.find({ userId: req.user.id });
-//     res.json(transactions);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// });
 
 module.exports = router;

@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
     }
     const user = await User.findOne({ username });
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).send('Invalid username or password');
+      return res.status(401).send('Invalid Credentials');
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
