@@ -10,14 +10,19 @@
         </option>
       </select>
     </div>
-    <div>
-      <strong>Total Income:</strong> {{ convertedTotalIncome }} {{ selectedCurrency }}
-    </div>
-    <div>
-      <strong>Total Expense:</strong> {{ convertedTotalExpense }} {{ selectedCurrency }}
-    </div>
-    <div>
-      <strong>Net Balance:</strong> {{ convertedNetBalance }} {{ selectedCurrency }}
+    <div class="balance-summary">
+      <div class="balance-box">
+        <strong>Income</strong>
+        <div class="amount">{{ convertedTotalIncome }} {{ selectedCurrency }}</div>
+      </div>
+      <div class="balance-box">
+        <strong>Net Balance</strong>
+        <div class="amount">{{ convertedNetBalance }} {{ selectedCurrency }}</div>
+      </div>
+      <div class="balance-box">
+        <strong>Expense</strong>
+        <div class="amount">{{ convertedTotalExpense }} {{ selectedCurrency }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -94,35 +99,36 @@ export default {
         .attr('width', width)
         .attr('height', height);
 
+      // Create the balance group
+      const balanceGroup = svg.append('g')
+        .attr('class', 'balance-group')
+        .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
       // Create the balance bar
-      svg.append('rect')
-        .attr('x', width / 2 - 100)
-        .attr('y', height / 2 - 5)
+      balanceGroup.append('rect')
+        .attr('x', -100)
+        .attr('y', -5)
         .attr('width', 200)
         .attr('height', 10)
         .attr('fill', '#333');
 
       // Create the pivot
-      svg.append('circle')
-        .attr('cx', width / 2)
-        .attr('cy', height / 2)
+      balanceGroup.append('circle')
+        .attr('cx', 0)
+        .attr('cy', 0)
         .attr('r', 10)
         .attr('fill', '#333');
 
       // Create the weights
-      svg.append('circle')
+      balanceGroup.append('path')
         .attr('class', 'weight left')
-        .attr('cx', width / 2 - 100)
-        .attr('cy', height / 2 + 50)
-        .attr('r', 20)
-        .attr('fill', '#ffcc00');
+        .attr('d', 'M-120,0 A20,20 0 1,0 -80,0 Z')
+        .attr('fill', '#7dead1');
 
-      svg.append('circle')
+      balanceGroup.append('path')
         .attr('class', 'weight right')
-        .attr('cx', width / 2 + 100)
-        .attr('cy', height / 2 + 50)
-        .attr('r', 20)
-        .attr('fill', '#ffcc00');
+        .attr('d', 'M80,0 A20,20 0 1,0 120,0 Z')
+        .attr('fill', '#7dead1');
 
       this.updateBalance();
     },
@@ -130,10 +136,10 @@ export default {
       const tilt = Math.min(30, Math.abs(this.netBalance) / 100); // Adjust the divisor as needed
       const rotation = this.netBalance > 0 ? tilt : -tilt;
 
-      d3.select(this.$refs.balanceContainer).select('svg').selectAll('.weight')
+      d3.select(this.$refs.balanceContainer).select('svg').select('.balance-group')
         .transition()
         .duration(1000)
-        .attr('transform', `rotate(${rotation}, 200, 100)`);
+        .attr('transform', `translate(200, 100) rotate(${rotation})`);
     }
   }
 };
@@ -144,5 +150,42 @@ export default {
   position: relative;
   height: 200px;
   margin-bottom: 20px;
+}
+
+.balance-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  gap: 20px; /* Add space between the boxes */
+}
+
+.balance-box {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  width: 30%;
+  text-align: center;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+
+strong {
+  font-size: 18px;
+  color: #333;
+}
+
+div {
+  font-size: 16px;
+  color: #333;
 }
 </style>
