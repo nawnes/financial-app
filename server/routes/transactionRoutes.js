@@ -31,5 +31,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-dedsd
 module.exports = router;
