@@ -134,7 +134,7 @@ export default {
     },
     updateBalance() {
       const tilt = Math.min(30, Math.abs(this.netBalance) / 100); // Adjust the divisor as needed
-      const rotation = this.netBalance > 0 ? tilt : -tilt;
+      const rotation = this.netBalance > 0 ? -tilt : tilt;
 
       d3.select(this.$refs.balanceContainer).select('svg').select('.balance-group')
         .transition()

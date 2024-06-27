@@ -73,7 +73,7 @@ nav a {
 }
 
 nav a:hover {
-  color : #000000;
+  color : #7dead1;
 }
 
 nav button {
@@ -86,6 +86,6 @@ nav button {
 }
 
 nav button:hover {
-  color : #000000;
+  color : #7dead1;
 }
 </style>
