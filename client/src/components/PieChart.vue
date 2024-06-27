@@ -1,64 +1,49 @@
 <template>
-  <v-chart :option="chartOptions" autoresize />
+  <div>
+    <Pie :data="chartData" :options="options" />
+  </div>
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
-import { use } from 'echarts/core';
-import { PieChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import VChart from 'vue-echarts';
+import { defineComponent } from 'vue';
+import { Pie } from 'vue-chartjs';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  PieController
+} from 'chart.js';
 
-use([PieChart, TitleComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, PieController);
 
 export default defineComponent({
   name: 'PieChart',
   components: {
-    'v-chart': VChart,
+    Pie
   },
   props: {
     chartData: {
       type: Object,
-      required: true,
+      required: true
     },
-  },
-  setup(props) {
-    const chartOptions = computed(() => ({
-      title: {
-        text: 'Pie Chart',
-        left: 'center',
-      },
-      tooltip: {
-        trigger: 'item',
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left',
-      },
-      series: [
-        {
-          name: 'Transactions',
-          type: 'pie',
-          radius: '50%',
-          data: props.chartData.map((item) => ({
-            value: item.value,
-            name: item.name,
-          })),
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)',
-            },
-          },
-        },
-      ],
-    }));
-
-    return {
-      chartOptions,
-    };
-  },
+    options: {
+      type: Object,
+      default: () => ({
+        responsive: true,
+        maintainAspectRatio: false
+      })
+    }
+  }
 });
 </script>
+
+<style scoped>
+div {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+</style>

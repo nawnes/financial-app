@@ -3,7 +3,6 @@
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/add-transaction">Add Transaction</router-link>
-      <router-link to="/charts">Charts</router-link>
       <button v-if="isAuthenticated" @click="logout">Logout</button>
       <router-link v-else to="/login">Login</router-link>
     </nav>
