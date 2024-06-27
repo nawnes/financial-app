@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const auth = require("../middleware/authMiddleware.js"); // Middleware pour vérifier le token
 
 const router = express.Router();
 
@@ -81,6 +82,37 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error("Login error:", error);
     res.status(400).send("Login failed");
+  }
+});
+
+// Endpoint to get profile data
+router.get("/profile", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(400).send("Failed to fetch profile data");
+  }
+});
+
+// Endpoint to update profile data
+router.put("/profile", auth, async (req, res) => {
+  try {
+    const { firstName, lastName, email } = req.body;
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    user.email = email || user.email;
+
+    await user.save();
+    res.send("Profile updated successfully");
+  } catch (error) {
+    res.status(400).send("Failed to update profile");
   }
 });
 

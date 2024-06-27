@@ -4,6 +4,7 @@ import AddTransaction from "../views/AddTransaction.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import About from "../views/About.vue";
+import Profile from "../views/Profile.vue";
 
 const routes = [
   {
@@ -33,6 +34,12 @@ const routes = [
     name: "About",
     component: About,
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    meta: { requiresAuth: true },
+  }
 ];
 
 const router = createRouter({
