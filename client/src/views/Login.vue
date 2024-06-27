@@ -15,23 +15,13 @@
 
         <div class="actions">
           <button type="submit" class="btn">LOGIN</button>
-          <a href="#" class="forgot-password">Forgot password?</a>
-        </div>
-        <div class="social-login">
-          <p>Or Sign Up Using</p>
-          <div class="social-buttons">
-            <button class="social-btn fb">f</button>
-            <button class="social-btn tw">t</button>
-            <button class="social-btn google">g</button>
-          </div>
-        </div>
-        <div class="signup-link">
-          <p>Or Sign Up Using</p>
-          <button type="button" class="btn" @click="goToRegister">SIGN UP</button>
         </div>
       </form>
+      <div class="register-link">
+        <p>Don't have an account?</p>
+        <button type="button" class="btn" @click="goToRegister">REGISTER</button>
+      </div>
       <div v-if="error" class="error">{{ error }}</div>
-      <div v-if="success" class="success">{{ success }}</div>
     </div>
   </div>
 </template>
@@ -44,24 +34,23 @@ export default {
     return {
       username: '',
       password: '',
-      error: null,
-      success: null
+      error: null
     };
   },
   methods: {
     async login() {
       this.error = null;
-      this.success = null;
       try {
         const response = await axios.post('http://localhost:3000/api/auth/login', {
           username: this.username,
           password: this.password,
         });
-        localStorage.setItem('token', response.data.token);
-        this.success = "Login successful!";
+        const { token, firstName } = response.data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('firstName', firstName);
         this.$router.push('/');
       } catch (error) {
-        this.error = error.response.data;
+        this.error = error.response.data || "Login failed. Please try again.";
       }
     },
     goToRegister() {
@@ -81,7 +70,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  /* background: linear-gradient(135deg, #6e8efb, #a777e3); */
 }
 
 .login-box {
@@ -120,7 +109,7 @@ h2 {
 
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -128,70 +117,37 @@ h2 {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  background: #bd93cf;
   color: #fff;
   cursor: pointer;
 }
 
 .actions .btn:hover {
-  background: linear-gradient(135deg, #5a77d7, #8958b4);
+  background: #bd93cf;
 }
 
-.actions .forgot-password {
-  color: #666;
-  text-decoration: none;
-}
-
-.social-login {
+.register-link {
   margin-top: 20px;
 }
 
-.social-login p {
-  margin-bottom: 10px;
-  color: #666;
-}
-
-.social-buttons {
-  display: flex;
-  justify-content: center;
-}
-
-.social-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin: 0 5px;
+.register-link .btn {
+  padding: 10px 15px;
   border: none;
+  border-radius: 5px;
+  background: #bd93cf;
   color: #fff;
   cursor: pointer;
 }
 
-.social-btn.fb {
-  background: #3b5998;
+.register-link .btn:hover {
+  background: #bd93cf;
 }
-
-.social-btn.tw {
-  background: #1da1f2;
-}
-
-.social-btn.google {
-  background: #db4437;
-}
-
-.signup-link {
-  margin-top: 20px;
-}
-
-.signup-link p {
+.register-link p {
   margin-bottom: 10px;
   color: #666;
 }
 
 .error {
   color: red;
-}
-
-.success {
-  color: green;
 }
 </style>

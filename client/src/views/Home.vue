@@ -1,24 +1,27 @@
 <template>
-  <div class="home-container">
-    <div class="home-box">
-      <balance-overview :transactions="transactions" />
-      <div class="charts-container">
-        <div class="chart-box">
-          <h2>Expenses Distribution</h2>
-          <div v-if="expensesData && expensesData.labels && expensesData.labels.length">
-            <pie-chart :chartData="expensesData" />
+  <div class="router-view-container">
+    <div class="home-container">
+      <div class="home-box">
+        <h2>Welcome, {{ firstName }}!</h2>
+        <balance-overview :transactions="transactions" />
+        <div class="charts-container">
+          <div class="chart-box">
+            <h2>Expenses Distribution</h2>
+            <div v-if="expensesData && expensesData.labels && expensesData.labels.length">
+              <pie-chart :chartData="expensesData" />
+            </div>
+            <div v-else>
+              <p>No expenses data available.</p>
+            </div>
           </div>
-          <div v-else>
-            <p>No expenses data available.</p>
-          </div>
-        </div>
-        <div class="chart-box">
-          <h2>Income Distribution</h2>
-          <div v-if="incomeData && incomeData.labels && incomeData.labels.length">
-            <pie-chart :chartData="incomeData" />
-          </div>
-          <div v-else>
-            <p>No income data available.</p>
+          <div class="chart-box">
+            <h2>Income Distribution</h2>
+            <div v-if="incomeData && incomeData.labels && incomeData.labels.length">
+              <pie-chart :chartData="incomeData" />
+            </div>
+            <div v-else>
+              <p>No income data available.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -40,7 +43,8 @@ export default {
     return {
       transactions: [],
       expensesData: null,
-      incomeData: null
+      incomeData: null,
+      firstName: localStorage.getItem('firstName') || 'Guest'
     };
   },
   async created() {
@@ -86,15 +90,17 @@ export default {
 
 <style scoped>
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .home-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  height: 100%;
+  /* background: linear-gradient(135deg, #6e8efb, #a777e3); */
 }
 
 .home-box {
