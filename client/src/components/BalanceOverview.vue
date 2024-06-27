@@ -101,8 +101,6 @@ select {
   padding: 5px;
   font-size: 16px;
 }
-<<<<<<< HEAD
+
 </style>
-=======
-</style>
->>>>>>> a0472b4150d99661a747c49d7a2b679968bc27de
+
