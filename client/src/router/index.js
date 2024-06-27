@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import AddTransaction from "../views/AddTransaction.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import About from "../views/About.vue";
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: About,
   },
 ];
 

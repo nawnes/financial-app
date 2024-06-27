@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>Balance Overview</h2>
+    <div class="balance-container" ref="balanceContainer"></div>
     <div>
       <label for="currency-select">Select Currency:</label>
       <select id="currency-select" v-model="selectedCurrency" @change="updateCurrency">
@@ -23,6 +24,7 @@
 
 <script>
 import axios from 'axios';
+import * as d3 from 'd3';
 
 export default {
   name: 'BalanceOverview',
@@ -66,6 +68,7 @@ export default {
   },
   async created() {
     await this.fetchExchangeRates();
+    this.createBalance();
   },
   methods: {
     async fetchExchangeRates() {
@@ -81,26 +84,65 @@ export default {
       if (!this.exchangeRates[this.selectedCurrency]) {
         await this.fetchExchangeRates();
       }
+      this.updateBalance();
+    },
+    createBalance() {
+      const width = 400;
+      const height = 200;
+      const svg = d3.select(this.$refs.balanceContainer)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      // Create the balance bar
+      svg.append('rect')
+        .attr('x', width / 2 - 100)
+        .attr('y', height / 2 - 5)
+        .attr('width', 200)
+        .attr('height', 10)
+        .attr('fill', '#333');
+
+      // Create the pivot
+      svg.append('circle')
+        .attr('cx', width / 2)
+        .attr('cy', height / 2)
+        .attr('r', 10)
+        .attr('fill', '#333');
+
+      // Create the weights
+      svg.append('circle')
+        .attr('class', 'weight left')
+        .attr('cx', width / 2 - 100)
+        .attr('cy', height / 2 + 50)
+        .attr('r', 20)
+        .attr('fill', '#ffcc00');
+
+      svg.append('circle')
+        .attr('class', 'weight right')
+        .attr('cx', width / 2 + 100)
+        .attr('cy', height / 2 + 50)
+        .attr('r', 20)
+        .attr('fill', '#ffcc00');
+
+      this.updateBalance();
+    },
+    updateBalance() {
+      const tilt = Math.min(30, Math.abs(this.netBalance) / 100); // Adjust the divisor as needed
+      const rotation = this.netBalance > 0 ? tilt : -tilt;
+
+      d3.select(this.$refs.balanceContainer).select('svg').selectAll('.weight')
+        .transition()
+        .duration(1000)
+        .attr('transform', `rotate(${rotation}, 200, 100)`);
     }
   }
 };
 </script>
 
 <style scoped>
-div {
-  margin-bottom: 10px;
+.balance-container {
+  position: relative;
+  height: 200px;
+  margin-bottom: 20px;
 }
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-select {
-  margin-bottom: 10px;
-  padding: 5px;
-  font-size: 16px;
-}
-
 </style>
-
