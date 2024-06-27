@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
 
-// Ajouter un intercepteur pour ajouter le token à chaque requête
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
