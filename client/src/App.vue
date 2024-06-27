@@ -35,14 +35,10 @@ body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('assets/gradient_1.jpg');
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-}
-
-#app {
-  min-height: 100vh;
+  background-image: url('assets/gradient_1.jpg'); /* Chemin vers l'image d'arrière-plan */
+  background-size: cover; /* Couvrir l'ensemble de la page */
+  background-repeat: no-repeat; /* Ne pas répéter l'image */
+  background-attachment: fixed; /* Image d'arrière-plan fixe */
 }
 
 .nav-items {
@@ -59,28 +55,22 @@ nav {
   display: flex;
   justify-content: flex-start;
   padding: 20px;
-  background: #212f49;
+  background: #333;
   color: white;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 30px;
-  z-index: 1000;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
 }
-
-  
 
 nav a {
   color: white;
   text-decoration: none;
-  margin-right: 20px; /* Adjust the margin as needed */
+  margin-right: 20px; 
   font-family: 'Montserrat', sans-serif;
-  
+
 }
 
 nav a:hover {
-  color : #52b0a1;
+  color : #000000;
 }
 
 nav button {
@@ -89,15 +79,10 @@ nav button {
   color: white;
   cursor: pointer;
   margin-right: 20px; /* Adjust the margin as needed */
-  font-family: 'Montserrat', sans-serif;
   font-size: 14px; /* the size is applicated on Logout*/
 }
 
 nav button:hover {
-  color : #52b0a1;
-}
-
-.router-view-container {
-  margin-top: 80px;
+  color : #000000;
 }
 </style>
