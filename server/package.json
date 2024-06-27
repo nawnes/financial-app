@@ -1,0 +1,35 @@
+{
+  "name": "finance-app-server",
+  "version": "1.0.0",
+  "description": "Backend for finance app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "test:unit": "jest --config jest.unit.config.js",
+    "test:integration": "jest --config jest.integration.config.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.4",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@shelf/jest-mongodb": "^4.3.2",
+    "mongodb-memory-server": "^9.4.0",
+    "supertest": "^7.0.0",
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "babel-jest": "^29.7.0",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/vue2-jest": "^29.2.6",
+    "vue-template-compiler": "^2.7.16"
+  },
+  "author": "",
+  "license": "ISC"
+}
