@@ -15,6 +15,20 @@
         </ul>
         <p>We hope this application helps you achieve better financial control and reach your financial goals. Thank you for choosing our Budget Management Application!</p>
       </div>
+      <div class="photo-circles">
+        <div class="photo-container">
+          <img src="@/assets/Anas.png" alt="Photo 1" class="circle-photo">
+          <div class="photo-description">Anas - Back-end Developer</div>
+        </div>
+        <div class="photo-container">
+          <img src="@/assets/Amal.png" alt="Photo 2" class="circle-photo">
+          <div class="photo-description">Amal - Front-end Developer</div>
+        </div>
+        <div class="photo-container">
+          <img src="@/assets/Ryan.png" alt="Photo 3" class="circle-photo">
+          <div class="photo-description">Ryan - DataBase Engineer</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +48,7 @@ body {
 
 .home-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -56,12 +71,12 @@ body {
 h2 {
   margin-bottom: 20px;
   font-size: 24px;
-  color: black;
+  color: #7dead1;
 }
 
 p {
   font-size: 18px;
-  color: rgb(32, 32, 32);
+  color: #7dead1;
   margin-bottom: 20px;
   font-weight: 500;
 }
@@ -76,9 +91,50 @@ ul {
 
 li {
   font-size: 18px;
-  color: rgb(32, 32, 32);
+  color: #7dead1;
   margin-bottom: 10px;
   font-weight: 500;
-  list-style-type : none;
+  list-style-type: none;
+}
+
+.photo-circles {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  margin-top: 20px;
+  margin-bottom: 20px; /* Add margin-bottom */
+}
+
+.photo-container {
+  position: relative;
+}
+
+.circle-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.photo-description {
+  display: none;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.photo-container:hover .photo-description {
+  display: block;
+  background-color: #bd93cf;
+  color : black;
+  font-weight: 550;
 }
 </style>
